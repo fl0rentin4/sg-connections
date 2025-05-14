@@ -1,0 +1,1004 @@
+  body {
+        background-color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .photo-container {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: var(--color5);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .photo-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    .photo-placeholder {
+        background-color: var(--color5);
+        background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 50%, #f0f0f0 50%, #f0f0f0 75%, transparent 75%, transparent);
+        background-size: 20px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color2);
+        font-size: 1rem;
+        overflow: hidden;
+        aspect-ratio: 1/1;
+        position: relative;
+        border-radius: 0.375rem;
+        height: 100px;
+    }
+    
+    .photo-frame {
+        border: 2px solid var(--color5);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .blurred {
+        filter: blur(4px);
+        opacity: 0.6;
+    }
+    
+    .photo-caption {
+        width: 100%;
+        min-height: 25px;
+        padding: 3px;
+        margin-top: 3px;
+        background: transparent;
+        border: none;
+        font-size: 0.75rem;
+        color: var(--color2);
+        resize: none;
+        text-align: center;
+    }
+    
+    .relationship-text {
+        width: 100%;
+        min-height: 30px;
+        padding: 5px;
+        margin-top: 5px;
+        background-color: var(--color4);
+        border: 1px dashed var(--color3);
+        border-radius: 4px;
+        font-size: 0.85rem;
+        color: var(--color1);
+        resize: none;
+        text-align: center;
+        font-weight: 500;
+        display: none;
+    }
+    
+    .editable-title {
+        width: 100%;
+        background: transparent;
+        border: none;
+        font-weight: 600;
+        color: var(--color1);
+        text-align: center;
+        resize: none;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        padding: 2px;
+        overflow: hidden;
+    }
+    
+    .link-button {
+        position: absolute;
+        bottom: 3px;
+        right: 3px;
+        background-color: var(--color5);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        font-size: 12px;
+        color: var(--color2);
+        border: 1px solid var(--color3);
+    }
+    
+    .connection-indicator {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--color1);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: bold;
+        border: 2px solid white;
+    }
+    
+    .relationship-line {
+        position: absolute;
+        background-color: var(--color3);
+        height: 2px;
+        z-index: 5;
+        transform-origin: 0 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .relationship-line.visible {
+        opacity: 1;
+    }
+    
+    h1 {
+        color: var(--color1) !important;
+    }
+    
+    p.text-center {
+        color: var(--color2) !important;
+    }
+    
+    #link-panel {
+        background-color: white;
+        border-top: 3px solid var(--color4);
+    }
+    
+    #link-panel-save {
+        background-color: var(--color1);
+    }
+    
+    #link-panel-cancel {
+        background-color: var(--color4);
+        color: var(--color1);
+    }
+    
+    .bg-blue-50 {
+        background-color: var(--color4) !important;
+    }
+    
+    .heart-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff0000;
+        font-size: 24px;
+        z-index: 5;
+        filter: drop-shadow(0 0 2px white);
+    }
+    
+    .photos-wrapper {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .photos-row {
+        flex-grow: 1;
+        display: flex;
+    }
+</style>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rectángulo 1 -->
+        <div class="photo-container" data-id="1">
+            <textarea class="editable-title">Primer Encuentro</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="1-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="1-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 2 -->
+        <div class="photo-container" data-id="2">
+            <textarea class="editable-title">Primera Cita</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="2-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="2-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 3 -->
+        <div class="photo-container" data-id="3">
+            <textarea class="editable-title">Aniversario</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="3-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="3-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 4 -->
+        <div class="photo-container" data-id="4">
+            <textarea class="editable-title">Vacaciones</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="4-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="4-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 5 -->
+        <div class="photo-container" data-id="5">
+            <textarea class="editable-title">Navidad</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="5-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="5-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 6 -->
+        <div class="photo-container" data-id="6">
+            <textarea class="editable-title">Cumpleaños</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="6-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="6-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 7 -->
+        <div class="photo-container" data-id="7">
+            <textarea class="editable-title">Viaje a la Playa</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="7-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="7-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 8 -->
+        <div class="photo-container" data-id="8">
+            <textarea class="editable-title">Concierto</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="8-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="8-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 9 -->
+        <div class="photo-container" data-id="9">
+            <textarea class="editable-title">Cena Romántica</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="9-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="9-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 10 -->
+        <div class="photo-container" data-id="10">
+            <textarea class="editable-title">Fiesta de Amigos</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="10-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="10-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 11 -->
+        <div class="photo-container" data-id="11">
+            <textarea class="editable-title">Día de Picnic</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="11-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="11-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 12 -->
+        <div class="photo-container" data-id="12">
+            <textarea class="editable-title">Fin de Semana</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="12-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="12-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 13 -->
+        <div class="photo-container" data-id="13">
+            <textarea class="editable-title">Viaje a la Montaña</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="13-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="13-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 14 -->
+        <div class="photo-container" data-id="14">
+            <textarea class="editable-title">Festival de Música</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="14-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="14-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 15 -->
+        <div class="photo-container" data-id="15">
+            <textarea class="editable-title">Día de Parque</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="15-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="15-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Rectángulo 16 -->
+        <div class="photo-container" data-id="16">
+            <textarea class="editable-title">Noche de Películas</textarea>
+            <div class="photos-wrapper relative">
+                <div class="flex flex-row space-x-2">
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="16-1">
+                                <span>Foto 1</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                    <div class="w-1/2 flex flex-col items-center">
+                        <div class="relative">
+                            <div class="photo-frame photo-placeholder" data-photo-id="16-2">
+                                <span>Foto 2</span>
+                                <div class="link-button" title="Vincular con otras fotos">🔗</div>
+                            </div>
+                        </div>
+                        <textarea class="photo-caption" placeholder="Añade una descripción..."></textarea>
+                        <textarea class="relationship-text" placeholder="Parentesco (ej: Primos)"></textarea>
+                    </div>
+                </div>
+                <div class="heart-icon">❤️</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Panel de vinculación -->
+<div id="link-panel" class="fixed bottom-0 left-0 right-0 p-4 shadow-lg transform translate-y-full transition-transform duration-300 z-40" style="display: none;">
+    <div class="flex justify-between items-center mb-2">
+        <div class="font-bold" style="color: var(--color1);">Vincular con otras fotos</div>
+        <div class="cursor-pointer" style="color: var(--color1);" id="link-panel-close">&times;</div>
+    </div>
+    <div id="link-panel-content" class="max-h-48 overflow-y-auto py-2"></div>
+    <div class="flex justify-end mt-2">
+        <button id="link-panel-cancel" class="px-4 py-2 rounded mr-2">Cancelar</button>
+        <button id="link-panel-save" class="text-white px-4 py-2 rounded">Guardar</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const photoContainers = document.querySelectorAll('.photo-container');
+        const photoPlaceholders = document.querySelectorAll('.photo-placeholder');
+        const linkPanel = document.getElementById('link-panel');
+        const linkPanelContent = document.getElementById('link-panel-content');
+        const linkPanelClose = document.getElementById('link-panel-close');
+        const linkPanelCancel = document.getElementById('link-panel-cancel');
+        const linkPanelSave = document.getElementById('link-panel-save');
+        
+        // Almacenar las conexiones entre fotos
+        let photoConnections = {};
+        let currentPhotoId = null;
+        
+        // Ajustar automáticamente la altura de los textareas
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+        
+        // Aplicar autoResize a todos los textareas
+        document.querySelectorAll('textarea').forEach(textarea => {
+            autoResizeTextarea(textarea);
+            textarea.addEventListener('input', function() {
+                autoResizeTextarea(this);
+            });
+            
+            // Evitar que los clics en los textareas activen el contenedor padre
+            textarea.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+        
+        // Manejar clics en los botones de enlace
+        document.querySelectorAll('.link-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // Obtener el ID de la foto actual
+                const photoPlaceholder = this.closest('.photo-placeholder');
+                currentPhotoId = photoPlaceholder.dataset.photoId;
+                
+                // Mostrar el panel de enlaces
+                showLinkPanel();
+            });
+        });
+        
+        // Mostrar el panel de enlaces
+        function showLinkPanel() {
+            // Generar elementos para cada foto individual
+            linkPanelContent.innerHTML = '';
+            
+            photoPlaceholders.forEach(placeholder => {
+                const photoId = placeholder.dataset.photoId;
+                
+                // No mostrar la foto actual como opción
+                if (photoId === currentPhotoId) {
+                    return;
+                }
+                
+                const container = placeholder.closest('.photo-container');
+                const title = container.querySelector('.editable-title').value;
+                const photoPosition = photoId.split('-')[1] === '1' ? 'Foto 1' : 'Foto 2';
+                
+                const linkItem = document.createElement('div');
+                linkItem.className = 'flex items-center p-2 border-b border-gray-200';
+                linkItem.dataset.photoId = photoId;
+                
+                // Verificar si esta foto ya está vinculada con la foto actual
+                const isLinked = photoConnections[currentPhotoId] && 
+                                photoConnections[currentPhotoId].includes(photoId);
+                
+                if (isLinked) {
+                    linkItem.classList.add('bg-blue-50');
+                }
+                
+                linkItem.innerHTML = `
+                    <input type="checkbox" class="mr-2" ${isLinked ? 'checked' : ''}>
+                    <div>${title} - ${photoPosition}</div>
+                `;
+                
+                linkItem.addEventListener('click', function(e) {
+                    // No activar si se hizo clic en el checkbox directamente
+                    if (e.target.tagName === 'INPUT') {
+                        return;
+                    }
+                    
+                    this.classList.toggle('bg-blue-50');
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                });
+                
+                linkPanelContent.appendChild(linkItem);
+            });
+            
+            // Mostrar el panel
+            linkPanel.style.display = 'block';
+            setTimeout(() => {
+                linkPanel.classList.add('translate-y-0');
+            }, 10);
+        }
+        
+        // Cerrar el panel de enlaces
+        function closeLinkPanel() {
+            linkPanel.classList.remove('translate-y-0');
+            setTimeout(() => {
+                linkPanel.style.display = 'none';
+            }, 300);
+        }
+        
+        // Manejar clic en el botón de cerrar del panel
+        linkPanelClose.addEventListener('click', closeLinkPanel);
+        linkPanelCancel.addEventListener('click', closeLinkPanel);
+        
+        // Manejar clic en el botón de guardar del panel
+        linkPanelSave.addEventListener('click', function() {
+            // Guardar las conexiones seleccionadas
+            const selectedItems = linkPanelContent.querySelectorAll('input[type="checkbox"]:checked');
+            const selectedIds = Array.from(selectedItems).map(item => item.closest('div').dataset.photoId);
+            
+            // Actualizar las conexiones
+            photoConnections[currentPhotoId] = selectedIds;
+            
+            // Para cada foto seleccionada, también añadir la conexión inversa
+            selectedIds.forEach(targetId => {
+                if (!photoConnections[targetId]) {
+                    photoConnections[targetId] = [];
+                }
+                if (!photoConnections[targetId].includes(currentPhotoId)) {
+                    photoConnections[targetId].push(currentPhotoId);
+                }
+            });
+            
+            // Actualizar indicadores visuales
+            updateConnectionIndicators();
+            
+            // Actualizar campos de parentesco
+            updateRelationshipFields();
+            
+            // Cerrar el panel
+            closeLinkPanel();
+        });
+        
+        // Actualizar indicadores de conexión
+        function updateConnectionIndicators() {
+            // Eliminar indicadores existentes
+            document.querySelectorAll('.connection-indicator').forEach(indicator => {
+                indicator.remove();
+            });
+            
+            // Añadir nuevos indicadores
+            for (const photoId in photoConnections) {
+                if (photoConnections[photoId] && photoConnections[photoId].length > 0) {
+                    const photo = document.querySelector(`[data-photo-id="${photoId}"]`);
+                    const indicator = document.createElement('div');
+                    indicator.className = 'connection-indicator';
+                    indicator.textContent = photoConnections[photoId].length;
+                    photo.parentElement.appendChild(indicator);
+                }
+            }
+        }
+        
+        // Mostrar/ocultar campos de parentesco
+        function updateRelationshipFields() {
+            // Ocultar todos los campos de parentesco
+            document.querySelectorAll('.relationship-text').forEach(field => {
+                field.style.display = 'none';
+            });
+            
+            // Mostrar campos de parentesco para fotos vinculadas
+            for (const photoId in photoConnections) {
+                if (photoConnections[photoId] && photoConnections[photoId].length > 0) {
+                    const photo = document.querySelector(`[data-photo-id="${photoId}"]`);
+                    const relationshipField = photo.closest('.flex.flex-col').querySelector('.relationship-text');
+                    relationshipField.style.display = 'block';
+                }
+            }
+        }
+        
+        // Manejar clics en las fotos para mostrar/ocultar conexiones
+        photoPlaceholders.forEach(placeholder => {
+            placeholder.addEventListener('click', function(e) {
+                // No activar si se hizo clic en el botón de enlace
+                if (e.target.classList.contains('link-button')) {
+                    return;
+                }
+                
+                e.stopPropagation();
+                
+                const photoId = this.dataset.photoId;
+                
+                // Si no hay una imagen cargada, permitir cargar una
+                if (!this.style.backgroundImage) {
+                    // Simular la selección de archivo
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    
+                    fileInput.onchange = function(e) {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                placeholder.style.backgroundImage = `url(${event.target.result})`;
+                                placeholder.style.backgroundSize = 'cover';
+                                placeholder.style.backgroundPosition = 'center';
+                                placeholder.innerHTML = '';
+                                
+                                // Volver a añadir el botón de enlace
+                                const linkButton = document.createElement('div');
+                                linkButton.className = 'link-button';
+                                linkButton.title = 'Vincular con otras fotos';
+                                linkButton.textContent = '🔗';
+                                linkButton.addEventListener('click', function(e) {
+                                    e.stopPropagation();
+                                    currentPhotoId = photoId;
+                                    showLinkPanel();
+                                });
+                                placeholder.appendChild(linkButton);
+                                
+                                // Si hay conexiones, añadir el indicador
+                                if (photoConnections[photoId] && photoConnections[photoId].length > 0) {
+                                    const indicator = document.createElement('div');
+                                    indicator.className = 'connection-indicator';
+                                    indicator.textContent = photoConnections[photoId].length;
+                                    placeholder.parentElement.appendChild(indicator);
+                                }
+                                
+                                // Actualizar campos de parentesco
+                                updateRelationshipFields();
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    };
+                    
+                    fileInput.click();
+                    return;
+                }
+ // Obtener las fotos vinculadas
+                const linkedPhotoIds = photoConnections[photoId] || [];
+                
+                // Restablecer todas las fotos (quitar desenfoque)
+                photoPlaceholders.forEach(p => {
+                    p.classList.remove('blurred');
+                });
+                
+                // Si ya se hizo clic en esta foto antes, terminar aquí (volver al estado normal)
+                if (this.classList.contains('active')) {
+                    this.classList.remove('active');
+                    
+                    // Ocultar todos los campos de parentesco cuando se vuelve al estado normal
+                    document.querySelectorAll('.relationship-text').forEach(field => {
+                        if (photoConnections[photoId] && photoConnections[photoId].length > 0) {
+                            const photo = document.querySelector(`[data-photo-id="${photoId}"]`);
+                            const relationshipField = photo.closest('.flex.flex-col').querySelector('.relationship-text');
+                            relationshipField.style.display = 'block';
+                        }
+                        
+                        // Mostrar campos de parentesco para fotos vinculadas
+                        for (const pId in photoConnections) {
+                            if (photoConnections[pId] && photoConnections[pId].length > 0) {
+                                const p = document.querySelector(`[data-photo-id="${pId}"]`);
+                                const rField = p.closest('.flex.flex-col').querySelector('.relationship-text');
+                                rField.style.display = 'block';
+                            }
+                        }
+                    });
+                    
+                    return;
+                }
+                
+                // Marcar esta foto como activa
+                photoPlaceholders.forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Aplicar desenfoque a todas las fotos excepto la actual y las vinculadas
+                photoPlaceholders.forEach(p => {
+                    const pId = p.dataset.photoId;
+                    
+                    // No desenfocar la foto actual
+                    if (pId === photoId) {
+                        return;
+                    }
+                    
+                    // No desenfocar las fotos vinculadas
+                    if (linkedPhotoIds.includes(pId)) {
+                        p.classList.remove('blurred');
+                    } else {
+                        p.classList.add('blurred');
+                    }
+                });
+                
+                // Mostrar campos de parentesco solo para las fotos vinculadas activas
+                document.querySelectorAll('.relationship-text').forEach(field => {
+                    field.style.display = 'none';
+                });
+                
+                // Mostrar el campo de parentesco de la foto actual
+                const currentRelationshipField = this.closest('.flex.flex-col').querySelector('.relationship-text');
+                if (linkedPhotoIds.length > 0) {
+                    currentRelationshipField.style.display = 'block';
+                }
+                
+                // Mostrar campos de parentesco para las fotos vinculadas
+                linkedPhotoIds.forEach(linkedId => {
+                    const linkedPhoto = document.querySelector(`[data-photo-id="${linkedId}"]`);
+                    const linkedRelationshipField = linkedPhoto.closest('.flex.flex-col').querySelector('.relationship-text');
+                    linkedRelationshipField.style.display = 'block';
+                });
+            });
+        });
+        
+        // Inicializar campos de parentesco
+        updateRelationshipFields();
+    });
+</script>
